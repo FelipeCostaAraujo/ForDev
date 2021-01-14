@@ -8,7 +8,7 @@ import 'package:meta/meta.dart';
 
 import 'package:for_dev/data/http/http.dart';
 
-class HttpAdapter implements HttpClient{
+class HttpAdapter implements HttpClient {
   final Client client;
   HttpAdapter(this.client);
 
@@ -19,7 +19,7 @@ class HttpAdapter implements HttpClient{
       'accept': 'application/json'
     };
     final jsonBody = body != null ? jsonEncode(body) : null;
-    final response = await client.post(url, headers: headers,body: jsonBody);
+    final response = await client.post(url, headers: headers, body: jsonBody);
     return response.body.isEmpty ? null : jsonDecode(response.body);
   }
 }
@@ -38,41 +38,48 @@ void main() {
   });
 
   group('post', () {
-    PostExpectation mockRequest() => when(client.post(any,body: anyNamed('body'),headers: anyNamed('headers')));
+    PostExpectation mockRequest() => when(
+        client.post(any, body: anyNamed('body'), headers: anyNamed('headers')));
 
-    void mockResponse(int statusCode,{String body = '{"any_key":"any_value"}'}){
-      mockRequest().thenAnswer((_) async => Response(body,200));
+    void mockResponse(int statusCode,
+        {String body = '{"any_key":"any_value"}'}) {
+      mockRequest().thenAnswer((_) async => Response(body, 200));
     }
-    setUp((){
+
+    setUp(() {
       mockResponse(200);
     });
 
     test('Should call post with correct value', () async {
       await sut.request(url: url, method: 'post', body: {'any_key': 'any_value'});
-      verify(client.post(url, headers: {
-        'content-type': 'application/json',
-        'accept': 'application/json'
-      }, body: '{"any_key":"any_value"}'));
+      verify(client.post(url,
+          headers: {
+            'content-type': 'application/json',
+            'accept': 'application/json'
+          },
+          body: '{"any_key":"any_value"}'));
     });
 
     test('Should call post without body', () async {
       await sut.request(url: url, method: 'post');
-      verify(client.post(
-          any,
-          headers: anyNamed('headers')
-      ));
+      verify(client.post(any, headers: anyNamed('headers')));
     });
 
     test('Should return data if post return 200', () async {
       final response = await sut.request(url: url, method: 'post');
-      expect(response, {"any_key":"any_value"});
+      expect(response, {"any_key": "any_value"});
     });
 
     test('Should return null if post return 200 with no data', () async {
-      mockResponse(200,body:'');
+      mockResponse(200, body: '');
       final response = await sut.request(url: url, method: 'post');
       expect(response, null);
     });
 
+    test('Should return null if post return 204', () async {
+      mockResponse(204, body: '');
+      final response = await sut.request(url: url, method: 'post');
+      expect(response, null);
+    });
   });
 }
