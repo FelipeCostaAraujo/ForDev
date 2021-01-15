@@ -21,31 +21,31 @@ class LoginPage extends StatelessWidget {
               child: Form(
                 child: Column(
                   children: [
-                    TextFormField(
-                      decoration: InputDecoration(
-                          labelText: 'Email',
-                          icon: Icon(Icons.email,
-                              color: Theme.of(context).primaryColorLight)),
-                      keyboardType: TextInputType.emailAddress,
-                      onChanged: presenter.validateEmail,
+                    StreamBuilder<String>(
+                      stream: presenter.emailErrorStream,
+                      builder: (context, snapshot){
+                        return TextFormField(
+                          decoration: InputDecoration(
+                              labelText: 'Email',
+                              errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
+                              icon: Icon(Icons.email,
+                                  color: Theme.of(context).primaryColorLight)),
+                          keyboardType: TextInputType.emailAddress,
+                          onChanged: presenter.validateEmail,
+                        );
+                      },
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 32),
-                      child: StreamBuilder<String>(
-                        stream: presenter.emailErrorStream,
-                        builder: (context,snapshot){
-                          return TextFormField(
-                            obscureText: true,
-                            onChanged: presenter.validatePassword,
-                            decoration: InputDecoration(
-                                labelText: 'Senha',
-                                errorText: snapshot.data,
-                                icon: Icon(Icons.lock,
-                                    color: Theme.of(context).primaryColorLight)),
-                            keyboardType: TextInputType.emailAddress,
-                          );
-                        },
-                      )
+                      child: TextFormField(
+                        obscureText: true,
+                        onChanged: presenter.validatePassword,
+                        decoration: InputDecoration(
+                            labelText: 'Senha',
+                            icon: Icon(Icons.lock,
+                                color: Theme.of(context).primaryColorLight)),
+                        keyboardType: TextInputType.emailAddress,
+                      ),
                     ),
                     RaisedButton(
                       onPressed: null,
