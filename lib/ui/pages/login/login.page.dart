@@ -53,9 +53,14 @@ class LoginPage extends StatelessWidget {
                         },
                       )
                     ),
-                    RaisedButton(
-                      onPressed: null,
-                      child: Text("Entrar".toUpperCase()),
+                    StreamBuilder(
+                      stream: presenter.isFormValidStream,
+                      builder: (context, snapshot){
+                        return RaisedButton(
+                          onPressed: snapshot.data == true ? (){} : null,
+                          child: Text("Entrar".toUpperCase()),
+                        );
+                      }
                     ),
                     SizedBox(
                       height: 10,
