@@ -1,4 +1,5 @@
 abstract class LoginPresenter{
+  bool get passwordVisible;
   Stream<String> get emailErrorStream;
   Stream<String> get passwordErrorStream;
   Stream<String> get mainErrorStream;
@@ -9,4 +10,5 @@ abstract class LoginPresenter{
   void validatePassword(String password);
   Future<void> auth();
   void dispose();
+  bool togglePasswordVisibility();
 }

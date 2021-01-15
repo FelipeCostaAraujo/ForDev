@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 
 class CustomIconButton extends StatelessWidget {
-
   CustomIconButton({this.radius, this.iconData, this.onTap});
 
   final double radius;
@@ -12,10 +11,13 @@ class CustomIconButton extends StatelessWidget {
   Widget build(BuildContext context) {
     return ClipRRect(
       borderRadius: BorderRadius.circular(radius),
-      child : Material(
+      child: Material(
         color: Colors.transparent,
-        child : InkWell(
-          child : Icon(iconData,color: Theme.of(context).primaryColorLight,),
+        child: InkWell(
+          child: Icon(
+            iconData,
+            color: Theme.of(context).primaryColorLight,
+          ),
           onTap: onTap,
         ),
       ),
