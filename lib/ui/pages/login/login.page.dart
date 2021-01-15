@@ -1,9 +1,11 @@
 import 'package:flutter/material.dart';
 
-import '../components/component.dart';
-
+import '../../components/component.dart';
+import '../login/login_presenter.dart';
 
 class LoginPage extends StatelessWidget {
+  final LoginPresenter presenter;
+  LoginPage(this.presenter);
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height * 0.3;
@@ -25,11 +27,13 @@ class LoginPage extends StatelessWidget {
                           icon: Icon(Icons.email,
                               color: Theme.of(context).primaryColorLight)),
                       keyboardType: TextInputType.emailAddress,
+                      onChanged: presenter.validateEmail,
                     ),
                     Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 32),
                       child: TextFormField(
                         obscureText: true,
+                        onChanged: presenter.validatePassword,
                         decoration: InputDecoration(
                             labelText: 'Senha',
                             icon: Icon(Icons.lock,
