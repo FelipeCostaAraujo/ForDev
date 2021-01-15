@@ -3,14 +3,7 @@ import 'package:flutter/material.dart';
 import '../components/component.dart';
 
 
-class LoginPage extends StatefulWidget {
-  @override
-  _LoginPageState createState() => _LoginPageState();
-}
-
-class _LoginPageState extends State<LoginPage> {
-  bool _passwordVisible = false;
-
+class LoginPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height * 0.3;
@@ -29,7 +22,6 @@ class _LoginPageState extends State<LoginPage> {
                     TextFormField(
                       decoration: InputDecoration(
                           labelText: 'Email',
-                          hintText: 'fordev@fordev.com',
                           icon: Icon(Icons.email,
                               color: Theme.of(context).primaryColorLight)),
                       keyboardType: TextInputType.emailAddress,
@@ -37,23 +29,16 @@ class _LoginPageState extends State<LoginPage> {
                     Padding(
                       padding: EdgeInsets.only(top: 8, bottom: 32),
                       child: TextFormField(
-                        obscureText: _passwordVisible,
+                        obscureText: true,
                         decoration: InputDecoration(
                             labelText: 'Senha',
-                            suffixIcon: CustomIconButton(
-                              radius: 32,
-                              iconData: _passwordVisible
-                                  ? Icons.visibility_off
-                                  : Icons.visibility,
-                              onTap: _togglePasswordVisibility,
-                            ),
                             icon: Icon(Icons.lock,
                                 color: Theme.of(context).primaryColorLight)),
                         keyboardType: TextInputType.emailAddress,
                       ),
                     ),
                     RaisedButton(
-                      onPressed: () {},
+                      onPressed: null,
                       child: Text("Entrar".toUpperCase()),
                     ),
                     SizedBox(
@@ -72,10 +57,19 @@ class _LoginPageState extends State<LoginPage> {
       ),
     );
   }
-
-  _togglePasswordVisibility(){
-    setState(() {
-      _passwordVisible = !_passwordVisible;
-    });
-  }
 }
+
+
+// _togglePasswordVisibility(){
+//   setState(() {
+//     _passwordVisible = !_passwordVisible;
+//   });
+// }
+//
+// suffixIcon: CustomIconButton(
+// radius: 32,
+// iconData: _passwordVisible
+// ? Icons.visibility_off
+//     : Icons.visibility,
+// onTap: _togglePasswordVisibility,
+// )
