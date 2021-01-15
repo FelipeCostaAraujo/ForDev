@@ -19,6 +19,13 @@ dev_dependencies:
   test:
   mockito:
   faker:
+  flutter_launcher_icons:
+flutter_icons:
+  ios: true
+  android: true
+  image_path_ios: "assets/launcher/icon.png"
+  image_path_android: "assets/launcher/icon.png"
+
 flutter:
   uses-material-design: true
 

@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 const brightness = Brightness.light;
 const primaryColor = Color.fromRGBO(136, 14, 76, 1);
@@ -7,6 +8,7 @@ const primaryColorLight = Color.fromRGBO(188, 71, 123, 1);
 const backgroundColor = const Color(0xFFFFFFFF);
 
 ThemeData themeDefault() {
+  SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.light);
   return ThemeData(
     brightness: brightness,
     inputDecorationTheme: InputDecorationTheme(
