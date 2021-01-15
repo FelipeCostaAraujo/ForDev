@@ -3,46 +3,62 @@ import 'package:flutter/material.dart';
 import '../../components/component.dart';
 import '../login/login_presenter.dart';
 
-class LoginPage extends StatelessWidget {
+class LoginPage extends StatefulWidget {
   final LoginPresenter presenter;
   LoginPage(this.presenter);
+
+  @override
+  _LoginPageState createState() => _LoginPageState();
+}
+
+class _LoginPageState extends State<LoginPage> {
+  bool _passwordVisible = false;
+
+  @override
+  void dispose() {
+    super.dispose();
+    widget.presenter.dispose();
+  }
+
   @override
   Widget build(BuildContext context) {
     final double height = MediaQuery.of(context).size.height * 0.3;
     return Scaffold(
       body: Builder(builder: (context) {
-
-        presenter.isLoadingStream.listen((isLoading) {
-          if(isLoading){
-            showDialog(context: context,barrierDismissible: false,child: SimpleDialog(
-              children: [
-                Column(
-                  mainAxisAlignment: MainAxisAlignment.center,
+        widget.presenter.isLoadingStream.listen((isLoading) {
+          if (isLoading) {
+            showDialog(
+                context: context,
+                barrierDismissible: false,
+                child: SimpleDialog(
                   children: [
-                    CircularProgressIndicator(),
-                    SizedBox(
-                      height: 10,
-                    ),
-                    Text('Aguarde...',textAlign: TextAlign.center)
+                    Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        CircularProgressIndicator(),
+                        SizedBox(
+                          height: 10,
+                        ),
+                        Text('Aguarde...', textAlign: TextAlign.center)
+                      ],
+                    )
                   ],
-                )
-              ],
-            ));
-          }else{
-            if(Navigator.canPop(context)){
+                ));
+          } else {
+            if (Navigator.canPop(context)) {
               Navigator.of(context).pop();
             }
           }
         });
 
-        presenter.mainErrorStream.listen((error) {
-          if(error != null){
-            Scaffold.of(context).showSnackBar(
-              SnackBar(
-                  backgroundColor: Colors.red[900],
-                  content: Text(error,textAlign: TextAlign.center,)
-              )
-            );
+        widget.presenter.mainErrorStream.listen((error) {
+          if (error != null) {
+            Scaffold.of(context).showSnackBar(SnackBar(
+                backgroundColor: Colors.red[900],
+                content: Text(
+                  error,
+                  textAlign: TextAlign.center,
+                )));
           }
         });
 
@@ -58,7 +74,7 @@ class LoginPage extends StatelessWidget {
                   child: Column(
                     children: [
                       StreamBuilder<String>(
-                        stream: presenter.emailErrorStream,
+                        stream: widget.presenter.emailErrorStream,
                         builder: (context, snapshot) {
                           return TextFormField(
                             decoration: InputDecoration(
@@ -70,20 +86,27 @@ class LoginPage extends StatelessWidget {
                                     color:
                                         Theme.of(context).primaryColorLight)),
                             keyboardType: TextInputType.emailAddress,
-                            onChanged: presenter.validateEmail,
+                            onChanged: widget.presenter.validateEmail,
                           );
                         },
                       ),
                       Padding(
                           padding: EdgeInsets.only(top: 8, bottom: 32),
                           child: StreamBuilder<String>(
-                            stream: presenter.passwordErrorStream,
+                            stream: widget.presenter.passwordErrorStream,
                             builder: (context, snapshot) {
                               return TextFormField(
                                 obscureText: true,
-                                onChanged: presenter.validatePassword,
+                                onChanged: widget.presenter.validatePassword,
                                 decoration: InputDecoration(
                                     labelText: 'Senha',
+                                    suffixIcon: CustomIconButton(
+                                      radius: 32,
+                                      iconData: _passwordVisible
+                                          ? Icons.visibility_off
+                                          : Icons.visibility,
+                                      onTap: _togglePasswordVisibility,
+                                    ),
                                     errorText: snapshot.data?.isEmpty == true
                                         ? null
                                         : snapshot.data,
@@ -95,11 +118,12 @@ class LoginPage extends StatelessWidget {
                             },
                           )),
                       StreamBuilder(
-                          stream: presenter.isFormValidStream,
+                          stream: widget.presenter.isFormValidStream,
                           builder: (context, snapshot) {
                             return RaisedButton(
-                              onPressed:
-                                  snapshot.data == true ? presenter.auth : null,
+                              onPressed: snapshot.data == true
+                                  ? widget.presenter.auth
+                                  : null,
                               child: Text("Entrar".toUpperCase()),
                             );
                           }),
@@ -120,18 +144,11 @@ class LoginPage extends StatelessWidget {
       }),
     );
   }
-}
 
-// _togglePasswordVisibility(){
-//   setState(() {
-//     _passwordVisible = !_passwordVisible;
-//   });
-// }
-//
-// suffixIcon: CustomIconButton(
-// radius: 32,
-// iconData: _passwordVisible
-// ? Icons.visibility_off
-//     : Icons.visibility,
-// onTap: _togglePasswordVisibility,
-// )
+  _togglePasswordVisibility() {
+    setState(() {
+      _passwordVisible = !_passwordVisible;
+    });
+  }
+
+}
