@@ -3,3 +3,4 @@ export 'login_header.dart';
 export 'custom_icon_button.dart';
 export 'headline1.dart';
 export 'spinner_dialog.dart';
+export 'error_message.dart';
