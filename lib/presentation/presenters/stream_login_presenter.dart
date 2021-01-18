@@ -1,9 +1,10 @@
 import 'dart:async';
 
-import 'package:for_dev/domain/helpers/helpers.dart';
 import 'package:meta/meta.dart';
 
+import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
+
 import '../protocols/protocols.dart';
 
 class LoginState {
