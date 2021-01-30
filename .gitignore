@@ -9,9 +9,6 @@
 .history
 .svn/
 
-lib/utils/settings.dart
-./lib/utils/settings.dart
-
 # IntelliJ related
 *.iml
 *.ipr
@@ -34,6 +31,8 @@ lib/utils/settings.dart
 .pub/
 /build/
 
+
+
 # Web related
 lib/generated_plugin_registrant.dart
 
@@ -42,3 +41,7 @@ app.*.symbols
 
 # Obfuscation related
 app.*.map.json
+.env
+.env*
+
+lib/utils/settings.dart
