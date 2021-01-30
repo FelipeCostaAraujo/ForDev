@@ -7,10 +7,10 @@ class RemoteAccountModel {
   RemoteAccountModel(this.accessToken);
 
   factory RemoteAccountModel.fromJson(Map json) {
-    if(!json.containsKey('accessToken')){
+    if(!json.containsKey('token')){
       throw HttpError.invalidData;
     }
-    return RemoteAccountModel(json['accessToken']);
+    return RemoteAccountModel(json['token']);
   }
 
   AccountEntity toEntity() => AccountEntity(accessToken);

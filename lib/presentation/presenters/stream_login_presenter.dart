@@ -2,6 +2,8 @@ import 'dart:async';
 
 import 'package:meta/meta.dart';
 
+import '../../ui/pages/pages.dart';
+
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
 
@@ -13,6 +15,7 @@ class LoginState {
   String emailError;
   String passwordError;
   String mainError;
+  bool passwordObscure = true;
   bool isLoading = false;
   bool get isFormValid =>
       emailError == null &&
@@ -21,18 +24,19 @@ class LoginState {
       password != null;
 }
 
-class StreamLoginPresenter {
+class StreamLoginPresenter implements LoginPresenter{
   final Validation validation;
   final Authentication authentication;
   var _controller = StreamController<LoginState>.broadcast();
 
   var _state = LoginState();
 
-  Stream<String> get emailErrorStream => _controller?.stream.map((state) => state.emailError)?.distinct();
+  Stream<String> get emailErrorStream => _controller?.stream?.map((state) => state.emailError)?.distinct();
   Stream<String> get passwordErrorStream => _controller?.stream?.map((state) => state.passwordError)?.distinct();
   Stream<String> get mainErrorStream => _controller?.stream?.map((state) => state.mainError)?.distinct();
   Stream<bool> get isFormValidStream => _controller?.stream?.map((state) => state.isFormValid)?.distinct();
   Stream<bool> get isLoadingStream => _controller?.stream?.map((state) => state.isLoading)?.distinct();
+  Stream<bool> get passwordObscureStream => _controller?.stream?.map((state) => state.passwordObscure)?.distinct();
 
   void update() => _controller?.add(_state);
 
@@ -40,6 +44,11 @@ class StreamLoginPresenter {
   void validateEmail(String email) {
     _state.email = email;
     _state.emailError = validation.validate(field: 'email', value: email);
+    update();
+  }
+
+  void togglePasswordVisibility() {
+    _state.passwordObscure = !_state.passwordObscure;
     update();
   }
 

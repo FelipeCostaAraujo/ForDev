@@ -11,22 +11,29 @@ class PasswordInput extends StatelessWidget {
     return StreamBuilder<String>(
       stream: presenter.passwordErrorStream,
       builder: (context, snapshot) {
-        return TextFormField(
-          obscureText: presenter.passwordVisible == true ? true : false,
-          onChanged: presenter.validatePassword,
-          decoration: InputDecoration(
-              labelText: 'Senha',
-              suffixIcon: CustomIconButton(
-                radius: 32,
-                iconData: presenter.passwordVisible == true
-                    ? Icons.visibility_off
-                    : Icons.visibility,
-                onTap: presenter.togglePasswordVisibility,
-              ),
-              errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
-              icon:
+        return StreamBuilder<bool>(
+          stream: presenter.passwordObscureStream,
+          builder: (context, snapshotVisible){
+            bool obscure = true;
+            if(snapshotVisible.hasData){
+              snapshotVisible?.data == true ? obscure = true : obscure = false;
+            }
+            return TextFormField(
+              obscureText: obscure,
+              onChanged: presenter.validatePassword,
+              decoration: InputDecoration(
+                  labelText: 'Senha',
+                  suffixIcon: CustomIconButton(
+                    radius: 32,
+                    iconData: obscure ? Icons.visibility : Icons.visibility_off,
+                    onTap: presenter.togglePasswordVisibility,
+                  ),
+                  errorText: snapshot.data?.isEmpty == true ? null : snapshot.data,
+                  icon:
                   Icon(Icons.lock, color: Theme.of(context).primaryColorLight)),
-          keyboardType: TextInputType.emailAddress,
+              keyboardType: TextInputType.emailAddress,
+            );
+          }
         );
       },
     );
