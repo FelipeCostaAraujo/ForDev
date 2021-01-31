@@ -6,8 +6,10 @@ class ValidationsBuilder{
   String fieldName;
   List<FieldValidation> validations = [];
 
+  ValidationsBuilder._();
+
   static ValidationsBuilder field(String fieldName){
-    _instance = ValidationsBuilder();
+    _instance = ValidationsBuilder._();
     _instance.fieldName = fieldName;
     return _instance;
   }
