@@ -31,7 +31,6 @@ class _LoginPageState extends State<LoginPage> {
 
   @override
   Widget build(BuildContext context) {
-    final double height = MediaQuery.of(context).size.height * 0.3;
     return Scaffold(
       body: Builder(builder: (context) {
         widget.presenter.isLoadingStream.listen((isLoading) {
@@ -56,7 +55,7 @@ class _LoginPageState extends State<LoginPage> {
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.stretch,
               children: [
-                LoginHeader(height: height),
+                LoginHeader(),
                 Headline1(text: 'Login'),
                 Padding(
                   padding: const EdgeInsets.all(32),

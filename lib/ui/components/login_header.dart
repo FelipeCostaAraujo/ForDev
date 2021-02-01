@@ -1,12 +1,10 @@
 import 'package:flutter/material.dart';
 
 class LoginHeader extends StatelessWidget {
-  const LoginHeader({Key key, @required this.height,}) : super(key: key);
-
-  final double height;
 
   @override
   Widget build(BuildContext context) {
+    final double height = MediaQuery.of(context).size.height * 0.3;
     return Container(
       height: height,
       margin: EdgeInsets.only(bottom: 32),

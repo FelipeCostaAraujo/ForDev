@@ -1,4 +1,4 @@
-import 'package:get/get.dart';
+import 'package:get/state_manager.dart';
 import 'package:meta/meta.dart';
 
 import '../../ui/pages/pages.dart';
@@ -14,7 +14,6 @@ class GetXLoginPresenter extends GetxController implements LoginPresenter {
 
   String _email;
   String _password;
-
   var _emailError = RxString();
   var _passwordError = RxString();
   var _mainError = RxString();
@@ -29,15 +28,15 @@ class GetXLoginPresenter extends GetxController implements LoginPresenter {
   Stream<bool> get isLoadingStream => _isLoading.stream;
   Stream<bool> get passwordObscureStream => _passwordObscure.stream;
 
-  GetXLoginPresenter(
-      {@required this.validation, @required this.authentication});
+  GetXLoginPresenter({@required this.validation, @required this.authentication});
+
   void validateEmail(String email) {
     _email = email;
     _emailError.value = validation.validate(field: 'email', value: email);
     _validateForm();
   }
 
-  void togglePasswordVisibility() {
+  void togglePasswordVisibility(){
     _passwordObscure.value = !_passwordObscure.value;
   }
 
@@ -48,10 +47,10 @@ class GetXLoginPresenter extends GetxController implements LoginPresenter {
   }
 
   void _validateForm() {
-    _isFormValid.value = _emailError.value == null &&
-        _passwordError.value == null &&
-        _email != null &&
-        _password != null;
+    _isFormValid.value = _emailError.value == null
+        && _passwordError.value == null
+        && _email != null
+        && _password != null;
   }
 
   Future<void> auth() async {
