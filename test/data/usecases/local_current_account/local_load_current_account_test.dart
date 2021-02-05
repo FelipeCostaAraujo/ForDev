@@ -1,35 +1,28 @@
-import 'package:faker/faker.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:for_dev/domain/entities/account_entity.dart';
-import 'package:for_dev/domain/usecases/load_current_account.dart';
 import 'package:mockito/mockito.dart';
-import 'package:meta/meta.dart';
+import 'package:faker/faker.dart';
 
-class LocalLoadCurrentAccount implements LoadCurrentAccount{
-  final FetchSecureCacheStorage fetchSecureCacheStorage;
-  LocalLoadCurrentAccount({@required this.fetchSecureCacheStorage});
+import 'package:for_dev/data/cache/cache.dart';
+import 'package:for_dev/data/usecases/usecases.dart';
 
-  Future<AccountEntity> load() async {
-    final token = await fetchSecureCacheStorage.fetchSecure('token');
-    return AccountEntity(token);
-  }
-}
+import 'package:for_dev/domain/entities/entities.dart';
+import 'package:for_dev/domain/helpers/helpers.dart';
 
-abstract class FetchSecureCacheStorage {
-  Future<String> fetchSecure(String key);
-}
-
-class FetchSecureCacheStorageSpy extends Mock
-    implements FetchSecureCacheStorage {}
+class FetchSecureCacheStorageSpy extends Mock implements FetchSecureCacheStorage {}
 
 void main() {
-
   LocalLoadCurrentAccount sut;
   FetchSecureCacheStorageSpy fetchSecureCacheStorage;
   String token;
 
+  PostExpectation mockFetchSecureCall() => when(fetchSecureCacheStorage.fetchSecure(any));
+
   void mockFetchSecure(){
-    when(fetchSecureCacheStorage.fetchSecure(any)).thenAnswer((_) async => token);
+    mockFetchSecureCall().thenAnswer((_) async => token);
+  }
+
+  void mockFetchSecureError(){
+    mockFetchSecureCall().thenThrow(Exception());
   }
 
   setUp((){
@@ -47,5 +40,11 @@ void main() {
   test('Should return an AccountEntity', () async {
     final account = await sut.load();
     expect(account, AccountEntity(token));
+  });
+
+  test('Should throw UnexpectedError if FetchSecureCacheStorage throws', () async {
+    mockFetchSecureError();
+    final future = sut.load();
+    expect(future, throwsA(DomainError.unexpected));
   });
 }
