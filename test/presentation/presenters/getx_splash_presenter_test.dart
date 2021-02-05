@@ -18,8 +18,12 @@ class GetXSplashPresenter implements SplashPresenter{
   Stream<String> get navigateToStream => _navigateTo.stream;
 
   Future<void> checkAccount() async {
-    final account = await loadCurrentAccount.load();
-    _navigateTo.value = account.isNull ? '/login' : '/home';
+    try{
+      final account = await loadCurrentAccount.load();
+      _navigateTo.value = account.isNull ? '/login' : '/home';
+    }catch(error){
+      _navigateTo.value = '/login';
+    }
   }
 
 }
@@ -31,8 +35,14 @@ void main(){
   LoadCurrentAccountSpy loadCurrentAccount;
   GetXSplashPresenter sut;
 
+  PostExpectation mockLoadCurrentCalls() => when(loadCurrentAccount.load());
+
   void mockLoadCurrentAccount({AccountEntity account}){
-    when(loadCurrentAccount.load()).thenAnswer((_) async => account);
+    mockLoadCurrentCalls().thenAnswer((_) async => account);
+  }
+
+  void mockLoadCurrentAccountError(){
+    mockLoadCurrentCalls().thenThrow(Exception());
   }
 
   setUp((){
@@ -57,8 +67,9 @@ void main(){
     await sut.checkAccount();
   });
 
-  // test('Should go to home page on success', () async{
-  //   sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/home')));
-  //   await sut.checkAccount();
-  // });
+  test('Should go to login on error', () async{
+    mockLoadCurrentAccountError();
+    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/login')));
+    await sut.checkAccount();
+  });
 }
