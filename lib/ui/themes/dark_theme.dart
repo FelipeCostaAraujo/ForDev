@@ -6,7 +6,7 @@ ThemeData darkTheme() {
   final primaryColor = Color.fromRGBO(136, 14, 76, 1);
   final primaryColorDark = Color.fromRGBO(96, 0, 39, 1);
   final primaryColorLight = Color.fromRGBO(188, 71, 123, 1);
-  final backgroundColor = const Color(0xFF353535);
+  final backgroundColor = const Color(0xFF242424);
 
   SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle.dark);
   return ThemeData(
