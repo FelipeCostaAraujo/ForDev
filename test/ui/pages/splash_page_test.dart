@@ -2,43 +2,14 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
-import 'package:get/get.dart';
+
 import 'package:mockito/mockito.dart';
-import 'package:meta/meta.dart';
+import 'package:get/get.dart';
 
-class SplashPage extends StatelessWidget {
-  final SplashPresenter presenter;
-  SplashPage({@required this.presenter});
+import 'package:for_dev/ui/pages/pages.dart';
 
-  @override
-  Widget build(BuildContext context) {
-    presenter.loadCurrentAccount();
-    return Scaffold(
-      appBar: AppBar(
-        title: Text('4dev'),
-      ),
-      body: Builder(
-        builder: (context){
-          presenter.navigateToStream.listen((page) {
-            if (page?.isNotEmpty == true) {
-              Get.offAllNamed(page);
-            }
-          });
-          return Center(
-            child: CircularProgressIndicator(),
-          );
-        }
-      ),
-    );
-  }
-}
 
 class SplashPresenterSpy extends Mock implements SplashPresenter{}
-
-abstract class SplashPresenter{
-  Stream<String> get navigateToStream;
-  Future<void> loadCurrentAccount();
-}
 
 void main(){
   SplashPresenterSpy presenter;
