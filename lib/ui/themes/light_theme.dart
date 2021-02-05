@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
-ThemeData themeDefault() {
+ThemeData lightTheme() {
   final brightness = Brightness.light;
   final primaryColor = Color.fromRGBO(136, 14, 76, 1);
   final primaryColorDark = Color.fromRGBO(96, 0, 39, 1);

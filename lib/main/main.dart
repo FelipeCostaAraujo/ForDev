@@ -17,7 +17,7 @@ class App extends StatelessWidget {
         child: GetMaterialApp(
           title: "4Dev",
           debugShowCheckedModeBanner: false,
-          theme: themeDefault(),
+          theme: lightTheme(),
           initialRoute: '/login',
           getPages: [
             GetPage(name: '/login', page: makeLoginPage)
