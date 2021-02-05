@@ -20,7 +20,8 @@ class App extends StatelessWidget {
           theme: lightTheme(),
           initialRoute: '/login',
           getPages: [
-            GetPage(name: '/login', page: makeLoginPage)
+            GetPage(name: '/login', page: makeLoginPage),
+            GetPage(name: '/home', page: () => Scaffold(body: Text("Essa e a home"),))
           ],
         )
     );

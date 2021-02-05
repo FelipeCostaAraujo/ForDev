@@ -1,5 +1,6 @@
 abstract class LoginPresenter{
   Stream<bool> get passwordObscureStream;
+  Stream<String> get navigateToStream;
   Stream<String> get emailErrorStream;
   Stream<String> get passwordErrorStream;
   Stream<String> get mainErrorStream;

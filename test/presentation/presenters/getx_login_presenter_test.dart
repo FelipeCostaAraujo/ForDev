@@ -181,4 +181,11 @@ void main() {
     sut.mainErrorStream.listen(expectAsync1((error) => expect(error, 'Aconteceu algo errado. Tente novamente em breve')));
     await sut.auth();
   });
+
+  test('Should change page on success', () async{
+    sut.validateEmail(email);
+    sut.validatePassword(password);
+    sut.navigateToStream.listen(expectAsync1((page) => expect(page, '/home')));
+    await sut.auth();
+  });
 }
