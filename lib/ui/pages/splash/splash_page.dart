@@ -1,5 +1,6 @@
 import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
+import 'package:for_dev/ui/components/component.dart';
 import 'package:get/get.dart';
 
 import './splash.dart';
@@ -26,7 +27,7 @@ class SplashPage extends StatelessWidget {
               child: Container(
                 height: 200,
                 width: 200,
-                child: FlareActor("assets/animations/loading_success_fail.flr", alignment:Alignment.center, fit:BoxFit.contain, animation:"loading"),
+                child: flareLoading()
               ),
             );
           }
