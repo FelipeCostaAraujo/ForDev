@@ -18,10 +18,11 @@ class App extends StatelessWidget {
           title: "4Dev",
           debugShowCheckedModeBanner: false,
           theme: lightTheme(),
-          initialRoute: '/login',
+          initialRoute: '/',
           getPages: [
-            GetPage(name: '/login', page: makeLoginPage),
-            GetPage(name: '/home', page: () => Scaffold(body: Text("Essa e a home"),))
+            GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
+            GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
+            GetPage(name: '/home', page: () => Scaffold(body: Text("Essa e a home"),) , transition: Transition.fadeIn)
           ],
         )
     );

@@ -18,6 +18,7 @@ dependencies:
   flutter_dotenv: ^3.1.0
   flutter_secure_storage: ^3.3.5
   localstorage: ^3.0.6
+  flare_flutter: ^2.0.6
 
 dev_dependencies:
   flutter_test:
@@ -39,6 +40,7 @@ flutter:
 
   assets:
     - assets/
+    - assets/animations/
     - .env
 
   # fonts:

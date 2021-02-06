@@ -1,5 +1,6 @@
 import 'dart:async';
 
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_test/flutter_test.dart';
 
@@ -36,7 +37,8 @@ void main(){
 
   testWidgets('Should presenter spinner on page load', (WidgetTester tester) async{
     await loadPage(tester);
-    expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    //expect(find.byType(CircularProgressIndicator), findsOneWidget);
+    expect(find.byType(FlareActor), findsOneWidget);
   });
 
   testWidgets('Should call loadCurrentAccount on page load', (WidgetTester tester) async{

@@ -1,3 +1,4 @@
+import 'package:flare_flutter/flare_actor.dart';
 import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 
@@ -22,7 +23,11 @@ class SplashPage extends StatelessWidget {
               }
             });
             return Center(
-              child: CircularProgressIndicator(),
+              child: Container(
+                height: 200,
+                width: 200,
+                child: FlareActor("assets/animations/loading_success_fail.flr", alignment:Alignment.center, fit:BoxFit.contain, animation:"loading"),
+              ),
             );
           }
       ),
