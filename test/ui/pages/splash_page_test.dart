@@ -37,7 +37,6 @@ void main(){
 
   testWidgets('Should presenter spinner on page load', (WidgetTester tester) async{
     await loadPage(tester);
-    //expect(find.byType(CircularProgressIndicator), findsOneWidget);
     expect(find.byType(FlareActor), findsOneWidget);
   });
 
