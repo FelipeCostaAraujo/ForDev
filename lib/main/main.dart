@@ -1,11 +1,14 @@
+import 'package:flutter_localizations/flutter_localizations.dart';
 import 'package:flutter_dotenv/flutter_dotenv.dart' as DotEnv;
+
 import 'package:flutter/material.dart';
-import 'package:for_dev/ui/pages/home/home_page.dart';
+
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
-import 'package:flutter_localizations/flutter_localizations.dart';
 
+
+import 'package:for_dev/ui/pages/home/home_page.dart';
 import './factories/factories.dart';
 import '../ui/themes/themes.dart';
 
