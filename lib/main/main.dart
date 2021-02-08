@@ -3,11 +3,13 @@ import 'package:flutter/material.dart';
 import 'package:for_dev/ui/pages/home/home_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
+import 'package:provider/provider.dart';
 
 import './factories/factories.dart';
 import '../ui/themes/themes.dart';
 
 void main() async{
+  Provider.debugCheckInvalidValueType = null;
   await DotEnv.load(fileName: ".env");
   await GetStorage.init();
   runApp(App());
@@ -36,7 +38,7 @@ class App extends StatelessWidget {
             GetPage(name: '/home', page: () => HomePage(), transition: Transition.fadeIn)
           ],
         )
-    );;
+    );
   }
 }
 

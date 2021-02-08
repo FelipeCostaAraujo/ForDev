@@ -2,6 +2,11 @@ import 'package:flutter/material.dart';
 import 'package:get/get.dart';
 import 'package:provider/provider.dart';
 
+
+import 'package:for_dev/utils/i18n/i18n.dart';
+
+import '../../helpers/errors/errors.dart';
+
 import './components/components.dart';
 import '../../components/component.dart';
 
@@ -45,7 +50,7 @@ class _LoginPageState extends State<LoginPage> {
 
         widget.presenter.mainErrorStream.listen((error) {
           if (error != null) {
-            showErrorMessage(context, error);
+            showErrorMessage(context, error.description);
           }
         });
 
@@ -82,7 +87,7 @@ class _LoginPageState extends State<LoginPage> {
                           FlatButton.icon(
                               onPressed: () {},
                               icon: Icon(Icons.person),
-                              label: Text('Criar uma conta'))
+                              label: Text(R.strings.addAccount))
                         ],
                       ),
                     ),
