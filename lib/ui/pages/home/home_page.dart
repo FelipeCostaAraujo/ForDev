@@ -25,6 +25,7 @@ class _HomePageState extends State<HomePage> {
                     SizedBox(
                       height: 40,
                     ),
+                  Text(Localizations.localeOf(context).toString()),
                     Text("Essa e a home"),
                     Switch(
                       value: isDarkMode,

@@ -4,6 +4,7 @@ import 'package:for_dev/ui/pages/home/home_page.dart';
 import 'package:get/get.dart';
 import 'package:get_storage/get_storage.dart';
 import 'package:provider/provider.dart';
+import 'package:flutter_localizations/flutter_localizations.dart';
 
 import './factories/factories.dart';
 import '../ui/themes/themes.dart';
@@ -24,7 +25,6 @@ class App extends StatelessWidget {
     appdata.writeIfNull('darkmode', false);
     bool isDarkMode = appdata.read('darkmode');
     Get.changeThemeMode(isDarkMode ? ThemeMode.dark : ThemeMode.light);
-
     return Container(
         child: GetMaterialApp(
           title: "4Dev",
@@ -36,6 +36,15 @@ class App extends StatelessWidget {
             GetPage(name: '/', page: makeSplashPage, transition: Transition.fade),
             GetPage(name: '/login', page: makeLoginPage, transition: Transition.fadeIn),
             GetPage(name: '/home', page: () => HomePage(), transition: Transition.fadeIn)
+          ],
+          localizationsDelegates: [
+            GlobalMaterialLocalizations.delegate,
+            GlobalWidgetsLocalizations.delegate,
+            GlobalCupertinoLocalizations.delegate,
+          ],
+          supportedLocales: [
+            const Locale('en', 'US'),
+            const Locale('pt', 'BR'),
           ],
         )
     );

@@ -1,6 +1,8 @@
 import 'package:flutter/material.dart';
-import 'package:for_dev/ui/components/component.dart';
 import 'package:get/get.dart';
+
+import '../../components/component.dart';
+import '../../helpers/helpers.dart';
 
 import './splash.dart';
 
@@ -11,6 +13,7 @@ class SplashPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     presenter.checkAccount();
+    R.load(Localizations.localeOf(context));
     return Scaffold(
       appBar: AppBar(
         title: Text('4dev'),
