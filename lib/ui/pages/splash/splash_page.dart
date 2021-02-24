@@ -14,6 +14,9 @@ class SplashPage extends StatelessWidget {
   Widget build(BuildContext context) {
     presenter.checkAccount();
     R.load(Localizations.localeOf(context));
+    final double height = MediaQuery.of(context).size.height * 0.3;
+    final double width = MediaQuery.of(context).size.width * 0.3;
+
     return Scaffold(
       appBar: AppBar(
         title: Text('4dev'),
@@ -27,8 +30,8 @@ class SplashPage extends StatelessWidget {
             });
             return Center(
               child: Container(
-                height: 200,
-                width: 200,
+                height: height,
+                width: width,
                 child: flareLoading()
               ),
             );
