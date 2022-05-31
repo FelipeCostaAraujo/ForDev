@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../../factories.dart';
 import '../../../../ui/pages/pages.dart';
+import '../../factories.dart';
 
-Widget makeSplashPage(){
-  return SplashPage(presenter: makeGetXSplashPresenter());
-}
+Widget makeSplashPage() => SplashPage(presenter: makeGetxSplashPresenter());

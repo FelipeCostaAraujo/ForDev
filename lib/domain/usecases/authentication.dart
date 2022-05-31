@@ -7,12 +7,11 @@ abstract class Authentication {
   Future<AccountEntity> auth(AuthenticationParams params);
 }
 
-class AuthenticationParams extends Equatable{
+class AuthenticationParams extends Equatable {
   final String email;
-  final String password;
+  final String secret;
 
-  @override
-  List get props => [email,password];
+  List get props => [email, secret];
 
-  AuthenticationParams({@required this.email, @required this.password});
+  AuthenticationParams({@required this.email, @required this.secret});
 }

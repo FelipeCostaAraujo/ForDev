@@ -1,1 +1,1 @@
-export 'resources.dart';
+export './resources.dart';

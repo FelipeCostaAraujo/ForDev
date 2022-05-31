@@ -1,26 +1,36 @@
 import '../../validation/protocols/protocols.dart';
 import '../../validation/validators/validators.dart';
 
-class ValidationsBuilder{
-  static ValidationsBuilder _instance;
+class ValidationBuilder {
+  static ValidationBuilder _instance;
   String fieldName;
   List<FieldValidation> validations = [];
 
-  ValidationsBuilder._();
+  ValidationBuilder._();
 
-  static ValidationsBuilder field(String fieldName){
-    _instance = ValidationsBuilder._();
+  static ValidationBuilder field(String fieldName) {
+    _instance = ValidationBuilder._();
     _instance.fieldName = fieldName;
     return _instance;
   }
 
-  ValidationsBuilder required(){
-      validations.add(RequiredFieldValidation(fieldName));
-      return this;
+  ValidationBuilder required() {
+    validations.add(RequiredFieldValidation(fieldName));
+    return this;
   }
 
-  ValidationsBuilder email(){
+  ValidationBuilder email() {
     validations.add(EmailValidation(fieldName));
+    return this;
+  }
+
+  ValidationBuilder min(int size) {
+    validations.add(MinLengthValidation(field: fieldName, size: size));
+    return this;
+  }
+
+  ValidationBuilder sameAs(String fieldToCompare) {
+    validations.add(CompareFieldsValidation(field: fieldName, fieldToCompare: fieldToCompare));
     return this;
   }
 

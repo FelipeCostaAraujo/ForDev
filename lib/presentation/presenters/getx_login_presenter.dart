@@ -1,40 +1,28 @@
-import '../protocols/validation.dart';
-
-import 'package:get/state_manager.dart';
+import 'package:get/get.dart';
 import 'package:meta/meta.dart';
 
+import '../../ui/helpers/helpers.dart';
 import '../../ui/pages/pages.dart';
-import '../../ui/helpers/errors/errors.dart';
-
 import '../../domain/helpers/helpers.dart';
 import '../../domain/usecases/usecases.dart';
-
 import '../protocols/protocols.dart';
+import '../mixins/mixins.dart';
 
-class GetXLoginPresenter extends GetxController implements LoginPresenter {
+class GetxLoginPresenter extends GetxController with LoadingManager, NavigationManager, FormManager, UIErrorManager implements LoginPresenter {
   final Validation validation;
   final Authentication authentication;
   final SaveCurrentAccount saveCurrentAccount;
-
+  
+  final _emailError = Rx<UIError>();
+  final _passwordError = Rx<UIError>();
+  
   String _email;
   String _password;
-  var _emailError = Rx<UIError>();
-  var _passwordError = Rx<UIError>();
-  var _mainError = Rx<UIError>();
-  var _navigationTo = RxString();
-  var _isFormValid = false.obs;
-  var _isLoading = false.obs;
-  var _passwordObscure = true.obs;
 
   Stream<UIError> get emailErrorStream => _emailError.stream;
   Stream<UIError> get passwordErrorStream => _passwordError.stream;
-  Stream<UIError> get mainErrorStream => _mainError.stream;
-  Stream<bool> get isFormValidStream => _isFormValid.stream;
-  Stream<bool> get isLoadingStream => _isLoading.stream;
-  Stream<bool> get passwordObscureStream => _passwordObscure.stream;
-  Stream<String> get navigateToStream => _navigationTo.stream;
 
-  GetXLoginPresenter({
+  GetxLoginPresenter({
     @required this.validation,
     @required this.authentication,
     @required this.saveCurrentAccount
@@ -42,60 +30,53 @@ class GetXLoginPresenter extends GetxController implements LoginPresenter {
 
   void validateEmail(String email) {
     _email = email;
-    _emailError.value = _validationField(field: 'email', value: email);
+    _emailError.value = _validateField('email');
     _validateForm();
-  }
-
-  void togglePasswordVisibility(){
-    _passwordObscure.value = !_passwordObscure.value;
   }
 
   void validatePassword(String password) {
     _password = password;
-    _passwordError.value = _validationField(field: 'password', value: password);
+    _passwordError.value = _validateField('password');
     _validateForm();
   }
 
-  UIError _validationField({String field,String value}){
-     final error = validation.validate(field: field, value: value);
-     switch(error){
-       case ValidationError.invalidField:
-         return UIError.invalidField;
-         break;
-       case ValidationError.requiredField:
-         return UIError.requiredField;
-         break;
-       default:
-         return null;
-         break;
-     }
+  UIError _validateField(String field) {
+    final formData = {
+      'email': _email,
+      'password': _password,
+    };
+    final error = validation.validate(field: field, input: formData);
+    switch (error) {
+      case ValidationError.invalidField: return UIError.invalidField;
+      case ValidationError.requiredField: return UIError.requiredField;
+      default: return null;
+    }
   }
 
-
   void _validateForm() {
-    _isFormValid.value = _emailError.value == null
-        && _passwordError.value == null
-        && _email != null
-        && _password != null;
+    isFormValid = _emailError.value == null
+      && _passwordError.value == null
+      && _email != null
+      && _password != null;
   }
 
   Future<void> auth() async {
     try {
-      _isLoading.value = true;
-      final account = await authentication.auth(AuthenticationParams(email: _email, password: _password));
+      mainError = null;
+      isLoading = true;
+      final account = await authentication.auth(AuthenticationParams(email: _email, secret: _password));
       await saveCurrentAccount.save(account);
-      _navigationTo.value = '/home';
+      navigateTo = '/surveys';
     } on DomainError catch (error) {
-      switch(error){
-        case DomainError.invalidCredentials:
-          _mainError.value = UIError.invalidCredentials;
-          break;
-        default:
-          _mainError.value = UIError.unexpected;
+      switch (error) {
+        case DomainError.invalidCredentials: mainError = UIError.invalidCredentials; break;
+        default: mainError = UIError.unexpected; break;
       }
-      _isLoading.value = false;
+      isLoading = false;
     }
   }
 
-  void dispose() {}
+  void goToSignUp() {
+    navigateTo = '/signup';
+  }
 }

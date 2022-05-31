@@ -1,9 +1,8 @@
 import 'package:flutter/material.dart';
-
 import 'package:provider/provider.dart';
 
-import '../login_presenter.dart';
 import '../../../helpers/helpers.dart';
+import '../login.dart';
 
 class EmailInput extends StatelessWidget {
   @override
@@ -14,10 +13,10 @@ class EmailInput extends StatelessWidget {
       builder: (context, snapshot) {
         return TextFormField(
           decoration: InputDecoration(
-              labelText: R.string.email,
-              errorText: snapshot.hasData ? snapshot.data.description : null,
-              icon: Icon(Icons.email,
-                  color: Theme.of(context).primaryColorLight)),
+            labelText: R.string.email,
+            icon: Icon(Icons.email, color: Theme.of(context).primaryColorLight),
+            errorText: snapshot.hasData ? snapshot.data.description : null,
+          ),
           keyboardType: TextInputType.emailAddress,
           onChanged: presenter.validateEmail,
         );

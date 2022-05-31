@@ -1,3 +1,1 @@
-import '../../../utils/settings/settings.dart';
-
-String makeApiUrl(String path) => Settings.fordevUrl + path;
+String makeApiUrl(String path) => 'http://fordevs.herokuapp.com/api/$path';

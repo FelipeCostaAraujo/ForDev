@@ -1,7 +1,7 @@
-name: for_dev
-description: A new Flutter application.
+name: ForDev
+description: Enquetes para programadores.
 publish_to: 'none'
-version: 1.0.0+1
+version: 0.0.1
 
 environment:
   sdk: ">=2.7.0 <3.0.0"
@@ -9,51 +9,33 @@ environment:
 dependencies:
   flutter:
     sdk: flutter
-  flutter_localizations:
-    sdk: flutter
-
   cupertino_icons: ^0.1.3
-  http: ^0.12.2
-  provider: 4.3.2+2
-  equatable: ^1.2.5
-  get: ^3.24.0
-  flutter_dotenv: ^3.1.0
-  flutter_secure_storage: ^3.3.5
-  localstorage: ^3.0.6
-  flare_flutter: ^2.0.6
-  get_storage:
+  http:
+  provider:
+  equatable:
+  get: 3.4.2
+  flutter_secure_storage:
+  localstorage:
+  carousel_slider:
+  intl:
 
 dev_dependencies:
   flutter_test:
     sdk: flutter
+  flutter_launcher_icons:
   test:
   mockito:
   faker:
-  flutter_launcher_icons:
+  image_test_utils:
+flutter:
+  uses-material-design: true
+  assets:
+    - lib/ui/assets/
+
 flutter_icons:
   ios: true
   android: true
-  image_path_ios: "assets/icon/ios.png"
-  image_path_android: "assets/icon/android.png"
-  adaptative_icon_background: "assets/icon/background.png"
-  adaptative_icon_foreground: "assets/icon/foreground.png"
-
-flutter:
-  uses-material-design: true
-
-  assets:
-    - assets/
-    - assets/animations/
-    - .env
-
-  # fonts:
-  #   - family: Schyler
-  #     fonts:
-  #       - asset: fonts/Schyler-Regular.ttf
-  #       - asset: fonts/Schyler-Italic.ttf
-  #         style: italic
-  #   - family: Trajan Pro
-  #     fonts:
-  #       - asset: fonts/TrajanPro.ttf
-  #       - asset: fonts/TrajanPro_Bold.ttf
-  #         weight: 700
+  image_path_android: lib/ui/assets/icon/android.png
+  image_path_ios: lib/ui/assets/icon/ios.png
+  adaptive_icon_background: lib/ui/assets/icon/background.png
+  adaptive_icon_foreground: lib/ui/assets/icon/foreground.png
